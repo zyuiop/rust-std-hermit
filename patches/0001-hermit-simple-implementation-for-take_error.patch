@@ -1,0 +1,39 @@
+From 2dc39d66266018673ea5d22d5df0ce07a054b053 Mon Sep 17 00:00:00 2001
+From: Louis Vialar <louis.vialar@gmail.com>
+Date: Wed, 10 Sep 2025 15:27:18 +0200
+Subject: [PATCH] [hermit] simple implementation for take_error
+
+---
+ library/std/src/sys/net/connection/socket/hermit.rs | 2 +-
+ library/std/src/sys/pal/hermit/os.rs                | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/library/std/src/sys/net/connection/socket/hermit.rs b/library/std/src/sys/net/connection/socket/hermit.rs
+index f49821657d9..e7a043e4aed 100644
+--- a/library/std/src/sys/net/connection/socket/hermit.rs
++++ b/library/std/src/sys/net/connection/socket/hermit.rs
+@@ -304,7 +304,7 @@ pub fn set_nonblocking(&self, nonblocking: bool) -> io::Result<()> {
+     }
+ 
+     pub fn take_error(&self) -> io::Result<Option<io::Error>> {
+-        unimplemented!()
++        Ok(None)
+     }
+ 
+     // This is used by sys_common code to abstract over Windows and Unix.
+diff --git a/library/std/src/sys/pal/hermit/os.rs b/library/std/src/sys/pal/hermit/os.rs
+index 0fe713a503b..9681964ed9b 100644
+--- a/library/std/src/sys/pal/hermit/os.rs
++++ b/library/std/src/sys/pal/hermit/os.rs
+@@ -3,7 +3,7 @@
+ use crate::marker::PhantomData;
+ use crate::path::{self, PathBuf};
+ use crate::sys::unsupported;
+-use crate::{fmt, io, str};
++use crate::{fmt, io};
+ 
+ pub fn errno() -> i32 {
+     unsafe { hermit_abi::get_errno() }
+-- 
+2.51.0
+

@@ -34,6 +34,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gcc-aarch64-linux-gnu gcc-riscv64-linux-gnu gcc-x86-64-linux-gnu
+      - name: Run patches
+        run: git am ../patches/*.patch
+        working-directory: ./rust
       - name: Build rust-std distribution artifacts
         run: ./x dist --config ../rust-config.toml rust-std --ci false
         working-directory: ./rust
